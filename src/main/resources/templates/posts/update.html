@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" th:href="@{~/assets/img/favicon.ico}">
+    <title>ZBloguy | Update post</title>
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{~/assets/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Righteous%7CMerriweather:300,300i,400,400i,700,700i"
+          rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{~/assets/css/mediumish.css}" rel="stylesheet">
+
+    <script src="https://cdn.tiny.cloud/1/cvqmzauqe8q38srdyhvdzdxc6pq3m090ikcczt91e8c9v2tr/tinymce/5/tinymce.min.js"
+            referrerpolicy="origin"></script>
+
+    <script>
+        tinymce.init({
+            selector: "textarea#editor",
+            skin: "bootstrap",
+            plugins: "lists, link, image, media",
+            toolbar:
+                "h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link image media | removeformat help",
+            menubar: false,
+            setup: (editor) => {
+                // Apply the focus effect
+                editor.on("init", () => {
+                    editor.getContainer().style.transition =
+                        "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out";
+                });
+                editor.on("focus", () => {
+                    (editor.getContainer().style.boxShadow =
+                        "0 0 0 .2rem rgba(0, 123, 255, .25)"),
+                        (editor.getContainer().style.borderColor = "#80bdff");
+                });
+                editor.on("blur", () => {
+                    (editor.getContainer().style.boxShadow = ""),
+                        (editor.getContainer().style.borderColor = "");
+                });
+            },
+        });
+    </script>
+</head>
+<body>
+
+<!-- Begin Nav
+================================================== -->
+<div th:replace="fragments/header :: header"></div>
+<!-- End Nav
+================================================== -->
+
+<!-- Begin Article
+================================================== -->
+<div class="container mt-4 mb-4">
+    <div class="row justify-content-md-center">
+        <div class="col-md-12 col-lg-8">
+            <h1 class="h2 mb-4" th:utext="'Update post #' + ${post.id}">Update Post</h1>
+            <form method="POST">
+                <div class="form-group">
+                    <label for="name">Title</label>
+                    <input type="text" class="form-control" id="name" name="title" placeholder="Post title ..." th:value="${post.title}">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            id="description"
+                            name="description"
+                            placeholder="Post description ..."
+                            th:value="${post.description}">
+                </div>
+
+                <div class="form-group">
+                    <label>Content</label>
+                    <textarea id="editor" th:text="${post.content}" name="content"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Status</label>
+
+                    <input class="form-control"
+                           type="text"
+                           list="statuses"
+                           name="status"
+                           id="status"
+                           th:value="${post.status}">
+
+                    <datalist id="statuses">
+                        <option value="0">Draft</option>
+                        <option value="1">Publish</option>
+                        <option value="2">Achieved</option>
+                    </datalist>
+                </div>
+
+                <div class="form-group">
+                    <label for="tag">Tag</label>
+                    <input class="form-control" type="text" list="tags" name="tag" id="tag" th:value="${post.tags[0].name}">
+
+                    <datalist id="tags">
+                        <th:block th:each="tag: ${tags}">
+                            <option th:value="${tag.name}" th:utext="${tag.name}"></option>
+                        </th:block>
+                    </datalist>
+                </div>
+
+                <hr>
+
+                <button type="submit" class="btn btn-warning">Update</button>
+                <a class="btn btn-danger" th:href="@{~/posts/manage}">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End Article
+================================================== -->
+
+<div class="hideshare"></div>
+
+<!-- Begin Footer
+================================================== -->
+<div th:replace="fragments/footer :: footer"></div>
+<!-- End Footer
+================================================== -->
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{~/assets/js/jquery.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+<script th:src="@{~/assets/js/bootstrap.min.js}"></script>
+<script th:src="@{~/assets/js/ie10-viewport-bug-workaround.js}"></script>
+<script th:src="@{~/assets/js/mediumish.js}"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" th:href="@{~/assets/img/favicon.ico}">
+    <title>ZBloguy | My Posts</title>
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{~/assets/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{~/assets/css/mediumish.css}" rel="stylesheet">
+</head>
+<body>
+
+<!-- Begin Nav
+================================================== -->
+<div th:replace="fragments/header :: header"></div>
+<!-- End Nav
+================================================== -->
+
+<!-- Begin Site Title
+================================================== -->
+<div class="container">
+    <div class="mainheading">
+        <h1 class="sitetitle">Mediumish</h1>
+        <p class="lead">
+            Bootstrap theme, medium style, simply perfect for bloggers
+        </p>
+    </div>
+    <!-- End Site Title
+    ================================================== -->
+
+    <!-- Begin Featured
+    ================================================== -->
+    <section class="featured-posts">
+        <div class="section-title">
+            <h2><span>My Posts</span></h2>
+        </div>
+
+        <a class="btn btn-success mb-2" th:href="@{~/posts/add}">New Post</a>
+        <div class="listfeaturedtag">
+            <table class="table table-hover .table-responsive">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Title</th>
+                        <th scope="col" colspan="2">Description</th>
+                        <th scope="col">Author</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Publish</th>
+                        <th scope="col">#</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <th:block th:each="post : ${posts}">
+                        <tr>
+                            <th scope="row" th:utext="${post.id}">ID</th>
+                            <td><a th:href="@{'/posts/detail/' + ${post.id}}"
+                                   th:utext="${post.title}">TITLE</a></td>
+                            <td colspan="2" th:utext="${post.description}">DESCRIPTION</td>
+                            <td th:utext="${post.user?.name}">AUTHOR</td>
+                            <td th:switch="${post.status}">
+                                <span th:case="0" class="badge badge-danger">Draft</span>
+                                <span th:case="1" class="badge badge-success">Publish</span>
+                                <span th:case="2" class="badge badge-warning">Achieved</span>
+                            </td>
+                            <td th:utext="${post.createdAt}">PUBLISH</td>
+                            <td>
+                                <a class="btn btn-warning" th:href="@{'/posts/update/' + ${post.id}}">Update</a>
+                                <a class="btn btn-danger" th:href="@{'/posts/delete/' + ${post.id}}">Delete</a>
+                            </td>
+                        </tr>
+                    </th:block>
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <!-- End Featured
+    ================================================== -->
+
+    <!-- Begin Footer
+    ================================================== -->
+    <div th:replace="fragments/footer :: footer"></div>
+    <!-- End Footer
+    ================================================== -->
+
+</div>
+<!-- /.container -->
+
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{~/assets/js/jquery.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+<script th:src="@{~/assets/js/bootstrap.min.js}"></script>
+<script th:src="@{~/assets/js/ie10-viewport-bug-workaround.js}"></script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" th:href="@{~/assets/img/favicon.ico}">
+    <title>Mediumish - A Medium style template by WowThemes.net</title>
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{~/assets/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{~/assets/css/mediumish.css}" rel="stylesheet">
+
+    <style>
+        .icons i {
+            color: #b5b3b3;
+            border: 1px solid #b5b3b3;
+            padding: 6px;
+            margin-left: 4px;
+            border-radius: 5px;
+            cursor: pointer
+        }
+
+        .activity-done {
+            font-weight: 600
+        }
+
+        .list-group li {
+            margin-bottom: 12px
+        }
+
+        .list-group-item {
+        }
+
+        .list li {
+            list-style: none;
+            padding: 10px 20px;
+            border: 1px solid rgba(0,0,0,.1);
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background: #fff
+        }
+
+        .checkicon {
+            color: green;
+            font-size: 19px
+        }
+
+        .date-time {
+            font-size: 15px
+        }
+
+        .profile-image img {
+            margin-left: 3px
+        }
+    </style>
+</head>
+<body>
+
+<!-- Begin Nav
+================================================== -->
+<div th:replace="fragments/header :: header"></div>
+<!-- End Nav
+================================================== -->
+
+<!-- Begin Site Title
+================================================== -->
+<div class="container">
+    <div class="mainheading">
+        <h1 class="sitetitle">Mediumish</h1>
+        <p class="lead">
+            Bootstrap theme, medium style, simply perfect for bloggers
+        </p>
+    </div>
+    <!-- End Site Title
+    ================================================== -->
+
+    <!-- Begin Featured
+    ================================================== -->
+    <section class="featured-posts">
+        <div class="section-title">
+            <h2><span>All Tags</span></h2>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="list list-inline">
+                        <th:block th:each="tag : ${tags}">
+                            <li class="d-flex justify-content-between">
+                                <div class="d-flex flex-row align-items-center">
+                                    <div class="ml-2">
+                                        <a th:href="@{'/tags/detail/' + ${tag.id}}">
+                                            <h5 class="" th:utext="${tag.name}">TAG NAME</h5>
+                                        </a>
+                                        <div class="d-flex flex-row mt-1 text-black-50 date-time">
+                                            <div><i class="fa fa-calendar-o"></i>
+                                                <span class="ml-2" th:utext="${tag.created_at}">CREATED TIME</span>
+                                            </div>
+                                            <div class="ml-3"><i class="fa fa-clock-o"></i><span
+                                                    class="ml-2">6h</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center">
+                                    <div class="d-flex flex-column mr-2">
+                                        <div class="profile-image">
+                                            <a class="btn btn-success"
+                                               th:href="@{'/tags/detail/' + ${tag.id}}">More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </th:block>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Featured
+    ================================================== -->
+
+    <!-- Begin Footer
+    ================================================== -->
+    <div th:replace="fragments/footer :: footer"></div>
+    <!-- End Footer
+    ================================================== -->
+
+</div>
+<!-- /.container -->
+
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{~/assets/js/jquery.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+<script th:src="@{~/assets/js/bootstrap.min.js}"></script>
+<script th:src="@{~/assets/js/ie10-viewport-bug-workaround.js}"></script>
+</body>
+</html>
