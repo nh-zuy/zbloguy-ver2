@@ -19,6 +19,7 @@
     <script src="https://cdn.tiny.cloud/1/cvqmzauqe8q38srdyhvdzdxc6pq3m090ikcczt91e8c9v2tr/tinymce/5/tinymce.min.js"
             referrerpolicy="origin"></script>
 
+    <script th:src="@{~/ckeditor/ckeditor.js}"></script>
     <script>
         tinymce.init({
             selector: "textarea#editor",
@@ -58,26 +59,33 @@
 ================================================== -->
 <div class="container mt-4 mb-4">
     <div class="row justify-content-md-center">
-        <div class="col-md-12 col-lg-8">
+        <div class="col-md-12 col-lg-12">
             <h1 class="h2 mb-4">Create New Post</h1>
 
             <hr/>
 
             <form method="POST">
-                <div class="form-group">
-                    <label for="name">Title</label>
-                    <input type="text" class="form-control" id="name" name="title" placeholder="Post title ...">
+                <div class="form-group required">
+                    <label for="name" class='control-label'>
+                        Title
+                    </label>
+                    <input type="text" required="required" class="form-control" id="name" name="title" placeholder="Post title ...">
                 </div>
 
                 <div class="form-group">
-                    <label for="description">Description</label>
-                    <input type="text" class="form-control" id="description" name="description"
-                           placeholder="Post description ...">
+                    <label for="editor">Description</label>
+<!--                    <input type="text" class="form-control" id="description" name="description" placeholder="Post description ...">-->
+                    <textarea id="editor" name="description" placeholder="Writing post description ..."></textarea>
                 </div>
 
-                <div class="form-group">
-                    <label>Content</label>
-                    <textarea id="editor" name="content"></textarea>
+                <div class="form-group required">
+                    <label for="content" class='control-label'>
+                        Content
+                    </label>
+                    <textarea required id="content" name="content" rows="20"></textarea>
+                    <script>
+                        CKEDITOR.replace( 'content' );
+                    </script>
                 </div>
 
                 <div class="form-group">

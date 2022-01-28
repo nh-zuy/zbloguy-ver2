@@ -87,6 +87,9 @@ public class PostMVCController {
         tags.add(tag);
 
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        boolean isAdmin = userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .anyMatch(authority -> authority.equals("ROLE_ADMIN"));
         User author = userRepository.findByUsernameOrEmail(userDetails.getUsername(), userDetails.getUsername())
                 .orElse(null);
         Post newPost = Post.builder()
@@ -95,6 +98,7 @@ public class PostMVCController {
                 .content(request.getContent())
                 .tags(tags)
                 .user(author)
+                .status(isAdmin ? 1 : 0)
                 .build();
         postRepository.save(newPost);
 
@@ -123,7 +127,7 @@ public class PostMVCController {
 
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         boolean isAdmin = userDetails.getAuthorities().stream()
-                .map(auth -> auth.getAuthority())
+                .map(GrantedAuthority::getAuthority)
                 .anyMatch(authority -> authority.equals("ROLE_ADMIN"));
         if (!isAdmin) {
             User author = userRepository.findByUsernameOrEmail(userDetails.getUsername(), userDetails.getUsername())
