@@ -19,6 +19,7 @@ a,a:hover {
 .mediumnavigation {
 	background:rgba(255,255,255,.97);
 	box-shadow:0 2px 2px -2px rgba(0,0,0,.15);
+	padding: 0 !important;
 }
 section {
 	margin-bottom:20px;
@@ -195,7 +196,7 @@ span.post-name a,span.post-read-more a:hover {
 	cursor:pointer;
 }
 .mediumnavigation .navbar-brand img {
-	max-height:30px;
+	max-height:65px;
 	margin-right:5px;
 }
 .mainheading h1.sitetitle {
@@ -447,4 +448,8 @@ ul.tags li a:hover {
 .form-group.required .control-label:after {
 	content:"*";
 	color:red;
+}
+
+.form-group label {
+	font-weight: 600;
 }

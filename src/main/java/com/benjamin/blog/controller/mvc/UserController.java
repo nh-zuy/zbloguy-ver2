@@ -7,15 +7,18 @@ import com.benjamin.blog.payload.requests.RegisterRequest;
 import com.benjamin.blog.repository.PostRepository;
 import com.benjamin.blog.repository.UserRepository;
 import com.benjamin.blog.service.AuthService;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.security.RolesAllowed;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -31,8 +34,13 @@ public class UserController {
         this.postRepository = postRepository;
     }
 
-    @GetMapping("/login")
-    public String loginForm() {
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginForm(Model model, String error, String logout) {
+        if (error != null)
+            model.addAttribute("error", "Invalid username, password combination.");
+
+        if (logout != null)
+            model.addAttribute("message", "Log out successfully.");
         return "login";
     }
 

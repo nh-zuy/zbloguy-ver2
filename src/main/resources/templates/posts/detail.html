@@ -76,9 +76,9 @@
                     </div>
                     <div class="col-md-10">
                         <a class="link-dark" th:href="@{'/users/detail/' + ${post.user?.id}}" th:utext="${post.user?.name}">AUTHOR</a>
-                        <a href="#" class="btn follow">Follow</a>
-                        <span class="author-description">Founder of WowThemes.net and creator of <b>"Mediumish"</b> theme that you're currently previewing. Developing professional premium themes, templates, plugins, scripts since 2012.</span>
-                        <span class="post-date">22 July 2017</span><span class="dot"></span><span class="post-read">6 min read</span>
+                        <a th:href="@{${post.user?.website != null} ? ${post.user?.website} : '#'}" class="btn follow">Follow</a>
+                        <div><span class="author-description" th:utext="${post.user?.description}">DESCRIPTION</span></div>
+                        <span class="post-date" th:utext="${post.createdAt}">22 July 2017</span><span class="dot"></span><span class="post-read">6 min read</span>
                     </div>
                 </div>
                 <!-- End Top Menta -->
@@ -104,7 +104,7 @@
             <div class="after-post-tags">
                 <ul class="tags">
                     <th:block th:each="tag: ${post.tags}">
-                        <li><a href="#" th:utext="${tag.name}">TAG</a></li>
+                        <li><a th:href="@{'/tags/detail/' + ${tag.id}}" th:utext="${tag.name}">TAG</a></li>
                     </th:block>
                 </ul>
             </div>

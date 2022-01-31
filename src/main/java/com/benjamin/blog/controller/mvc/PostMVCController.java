@@ -107,9 +107,20 @@ public class PostMVCController {
 
     @GetMapping("/update/{id}")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ModelAndView updateForm(@PathVariable("id") long id) {
-        ModelAndView modelAndView = new ModelAndView("posts/update");
+    public ModelAndView updateForm(@PathVariable("id") long id) throws Exception {
         Post post = postRepository.findById(id).orElse(null);
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        boolean isAdmin = userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .anyMatch(authority -> authority.equals("ROLE_ADMIN"));
+        if (!isAdmin) {
+            User author = userRepository.findByUsernameOrEmail(userDetails.getUsername(), userDetails.getUsername())
+                    .orElse(null);
+            if (!Objects.equals(author.getId(), post.getUser().getId())) {
+                throw new Exception("403 Forbidden");
+            }
+        }
+        ModelAndView modelAndView = new ModelAndView("posts/update");
         if (post == null) {
             return modelAndView;
         }

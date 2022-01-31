@@ -37,6 +37,12 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "website")
+    private String website;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts;
 
