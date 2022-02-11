@@ -25,7 +25,7 @@ public class PageController {
 
     @GetMapping({"/", "index", "index.html"})
     public String index(final Model model) {
-        List<Post> posts = postRepository.findAll();
+        List<Post> posts = postRepository.findAll(Sort.by("id").ascending());
         model.addAttribute("posts", posts);
 
         Page<Post> pageablePosts = postRepository.findAll(PageRequest.of(0, 6, Sort.by("id").descending()));
